@@ -1,0 +1,12 @@
+name:
+  type: string
+  placeholder: Client namme
+street:
+  type: string
+  placeholder: Street + nr
+postal:
+  type: string
+  placeholder: 9999 ZZ
+place:
+  type: string
+  placeholder: City

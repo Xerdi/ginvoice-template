@@ -1,0 +1,8 @@
+main font: Ubuntu
+mono font: Ubuntu Mono
+foreground color: c4a000
+background color: 360519
+images:
+  - img/image1
+  - img/image2
+  - img/image3

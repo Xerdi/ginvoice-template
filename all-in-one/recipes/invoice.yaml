@@ -1,0 +1,59 @@
+# Actors
+supplier:
+  type: string
+client:
+  type: string
+# Invoice variables
+title:
+  type: string
+  default: Invoice \param{number}
+subtitle:
+  type: string
+  placeholder: Subtitle
+currency:
+  type: string
+  default: \EUR
+number:
+  type: string
+  placeholder: Invoice number
+date:
+  type: string
+  placeholder: Invoice date
+records:
+  type: table
+  columns:
+    description:
+      type: string
+    date:
+      type: string
+    # Quantity is a string, as it is the representation of,
+    # not a number compatible with numprint.
+    quantity:
+      type: string
+      default: 0x
+    price:
+      type: number
+      default: 0
+    total:
+      type: number
+      default: 0
+totals:
+  type: object
+  fields:
+    total ex:
+      type: number
+      default: 0
+    vat:
+      type: number
+      default: 0
+    total incl:
+      type: number
+      default: 0
+message:
+  type: string
+  default: |
+    Please send us the total of \currency~\paramfield{totals}{total incl}
+    within the coming 14 days to account number
+    \param[supplier]{account number} with the note of the invoice number \param{number}.\\[2em]
+    
+    Questions about this invoice? Please contact us.
