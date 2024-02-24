@@ -1,0 +1,42 @@
+client: juicing-joker
+title: Grapefruit Inc. Invoice
+subtitle: for fruits and stuff
+currency: \$
+number: 1
+date: January 28, 2024
+records:
+  - description: Activities project x
+    date: oct. 18
+    quantity: 1h 30m
+    price: 65.00
+    total: 97.50
+  - description: ''
+    date: oct. 19
+    quantity: 6h 15m
+    price: 65.00
+    total: 406.25
+  - description: Material Costs
+    date: oct. 19
+    quantity: 20x
+    price: 24.99
+    total: 499.80
+  - description: Activities project x
+    date: oct. 21
+    quantity: 2h
+    price: 65.00
+    total: 130.00
+  - description: ''
+    date: oct. 22
+    quantity: 1h 30m
+    price: 65.00
+    total: 97.50
+totals:
+  total ex: 1229.05
+  vat: 258.10
+  total incl: 1487.15
+message: |
+  Please send us the total of \currency~\paramfield{totals}{total incl}
+  within the coming 14 days to account number
+  \param[supplier]{account number} with the note of the invoice number \param{number}.\\[2em]
+  
+  Questions about this invoice? Please contact us.

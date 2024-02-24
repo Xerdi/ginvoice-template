@@ -1,0 +1,36 @@
+client: juicing-joker
+title: Grapefruit Inc. Invoice
+subtitle: for fruits and stuff
+currency: \$
+number: 2
+date: 12 februari 2024
+records:
+  - description: Werkzaamheden project x
+    date: oct. 18
+    quantity: 1u 30m
+    price: 65.00
+    total: 97.50
+  - description: ''
+    date: oct. 19
+    quantity: 6u 15m
+    price: 65.00
+    total: 406.25
+  - description: Materiaalkosten
+    date: oct. 19
+    quantity: 20x
+    price: 24.99
+    total: 499.80
+  - description: Werkzaamheden project x
+    date: oct. 21
+    quantity: 2u
+    price: 65.00
+    total: 130.00
+  - description: ''
+    date: oct. 22
+    quantity: 1u 30m
+    price: 65.00
+    total: 97.50
+totals:
+  total ex: 1229.05
+  vat: 258.10
+  total incl: 1487.15

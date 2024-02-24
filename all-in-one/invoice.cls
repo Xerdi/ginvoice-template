@@ -47,31 +47,25 @@
 
 \RequirePackage[table]{xcolor}
 \RequirePackage{colortbl}
+\newbool{styletable}
+\boolfalse{styletable}
 \colorlet{bgcolor}{white}
 \colorlet{textcolor}{black}
+\def\continuationheader{}
+\def\continuationfooter{z.o.z.}
 
 \pagestyle{empty}
 \linespread{1.4}
 
 \newcommand\financial[1]{\texttt{\np{#1}}}
 
-\input{meta}
-
-\newcommand{\makeheader}{%
+\newcommand{\makeheader}[2]{%
     \makeatletter
-    \hypersetup{
-        pdftitle = {\title},
-        pdfauthor = {\author},
-        pdfsubject = {\subject},
-        pdfkeywords = {\keywords},
-        pdfproducer = {\producer},
-        pdfcreator = {\creator}
-    }
     \begin{center}
         \color{textcolor}
-        {\Huge\textbf{\title} \\}
+        {\Huge\textbf{#1} \\}
         \vspace{-.3cm}
-        {\Large\textbf{\subtitle} \\}
+        {\Large\textbf{#2} \\}
     \end{center}
     \makeatother
 }
@@ -84,7 +78,7 @@
 \newcommand\cum[2]{%
     \cumoffset
     \columnheaderbgcolor
-    \rowheadercolor{#1} & \currency\hfill\financial{#2} \\
+    \rowheadercolor{#1} & €\hfill\financial{#2} \\
 }
 
 \newcommand\rowheaderbgcolor{%
@@ -104,7 +98,7 @@
         \color{textcolor}
     }{}
 }
-
+\def\columncount{5}
 \newenvironment{invoice}[3]{%
     \ifbool{styletable}{%
         \rowcolors{2}{white}{gray!15}%

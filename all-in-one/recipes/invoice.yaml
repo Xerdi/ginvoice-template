@@ -1,0 +1,64 @@
+# Actors
+supplier:
+  type: string
+client:
+  type: string
+# Invoice variables
+title:
+  type: string
+  default: Factuur \param{number}
+subtitle:
+  type: string
+  placeholder: Subtitel
+currency:
+  type: string
+  default: \EUR
+number:
+  type: string
+  placeholder: Factuur nummer
+date:
+  type: string
+  placeholder: Factuur datum
+records:
+  type: table
+  columns:
+    description:
+      type: string
+    date:
+      type: string
+    # Quantity is a string, as it is the representation of,
+    # not a number compatible with numprint.
+    quantity:
+      type: string
+      default: 0x
+    price:
+      type: number
+      default: 0
+    total:
+      type: number
+      default: 0
+totals:
+  type: object
+  fields:
+    total ex:
+      type: number
+      default: 0
+    vat:
+      type: number
+      default: 0
+    total incl:
+      type: number
+      default: 0
+message:
+  type: string
+  default: |
+    Gelieve het bedrag van
+    \currency\ \paramfield{totals}{total incl}
+    overmaken naar
+    \param[supplier]{account number}
+    onder vermelding van factuurnummer
+    \param{number}
+    t.a.v. \param[supplier]{name}.
+    \\[2em]
+    
+    B.v.d.

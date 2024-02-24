@@ -1,0 +1,15 @@
+images:
+  type: list
+  item type: string
+main font:
+  type: string
+  default: Ubuntu
+mono font:
+  type: string
+  default: Ubuntu Mono
+foreground color:
+  type: string
+  default: 000000
+background color:
+  type: string
+  default: FFFFFF

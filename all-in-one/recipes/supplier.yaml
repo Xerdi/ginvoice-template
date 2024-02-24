@@ -1,0 +1,21 @@
+name:
+  type: string
+  placeholder: Leveranciersnaam
+email:
+  type: string
+  placeholder: E-mail
+website:
+  type: string
+account number:
+  type: string
+  placeholder: Rekeningnummer
+extra fields:
+  type: table
+  columns:
+    key:
+      type: string
+    val:
+      type: string
+# Suppliers style
+style:
+  type: string

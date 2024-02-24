@@ -1,0 +1,12 @@
+name:
+  type: string
+  placeholder: Klantnaam
+street:
+  type: string
+  placeholder: Straatnaam + nr
+postal:
+  type: string
+  placeholder: 9999 ZZ
+place:
+  type: string
+  placeholder: Plaatsnaam

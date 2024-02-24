@@ -1,0 +1,129 @@
+% GinVoice - Creating LaTeX invoices with a GTK GUI
+% Copyright (C) 2021  Erik Nijenhuis <erik@xerdi.com>
+%
+% This program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program.  If not, see <https://www.gnu.org/licenses/>.
+\documentclass[
+    singlesided,
+    paper=a4,
+    fontsize=10pt
+]{invoice}
+
+\usepackage{lua-placeholders}
+\usepackage[dutch]{babel}
+\usepackage{tabularx}
+\usepackage{graphicx}
+
+\usepackage{fontspec}
+\usepackage{xpatch}
+\usepackage{scrlayer-scrpage}
+\usepackage{blindtext}
+\usepackage{booktabs}
+
+\DeclareNewPageStyleByLayers{headermain}{header.bg}
+
+\DeclareNewLayer[
+    background,
+    topmargin,
+    addheight=4cm,
+    contents={\color{bgcolor}\rule{\layerwidth}{\layerheight}}
+]{header.bg}
+
+\setlength{\arrayrulewidth}{1pt}
+
+\loadrecipe[\jobname]{recipes/invoice.yaml}
+\loadrecipe{recipes/supplier.yaml}
+\loadrecipe{recipes/client.yaml}
+\loadrecipe{recipes/style.yaml}
+
+\def\currency{\rawparam{\jobname}{currency}}
+
+\IfFileExists{invoices/\jobname.yaml}{
+    \loadpayload[\jobname]{invoices/\jobname.yaml}
+    \strictparams
+}{}
+
+\hasparam{client}{%
+    \loadpayload[client]{clients/\rawparam{\jobname}{client}.yaml}
+}{}
+
+\hasparam{supplier}{%
+    \loadpayload[supplier]{suppliers/\rawparam{\jobname}{supplier}.yaml}
+}{}
+
+\hasparam[supplier]{style}{%
+    \loadpayload[style]{styles/\rawparam{supplier}{style}.yaml}
+    \setmainfont{\rawparam{style}{main font}}
+    \setmonofont{\rawparam{style}{mono font}}
+    \definecolor{backgroundcolor}{HTML}{\rawparam{style}{background color}}
+    \colorlet{bgcolor}{backgroundcolor}
+    \definecolor{foregroundcolor}{HTML}{\rawparam{style}{foreground color}}
+    \colorlet{textcolor}{foregroundcolor}
+}{}
+
+\nprounddigits{2}
+
+\begin{document}
+\thispagestyle{headermain}
+\makeheader{\param{title}}{\param{subtitle}}
+\vspace{2cm}
+\begin{tabular}{@{}l@{}}
+    \begin{tabular}{@{}l@{}}
+        \param[client]{name}\\
+        \param[client]{street}\\
+        \param[client]{postal}, \param[client]{place}\\
+    \end{tabular} \\
+    \begin{tabular}{@{}l l@{}}
+        Factuur nummer: & \param{number}\\
+        Factuur datum: & \param{date}\\
+    \end{tabular}
+\end{tabular}
+\hfill
+\begin{tabular}{@{}l r@{}}
+    Bedrijf: & \param[supplier]{name} \\
+    E-mail: & \param[supplier]{email} \\
+    Website: & \param[supplier]{website} \\
+    Rekening-nr: & \param[supplier]{account number} \\
+    \hasparam[suplier]{extra fields}{%
+        \def\formatsupplierextra{\key & \val\\}%
+        \fortablerow[supplier]{extra fields}{formatsupplierextra}
+    }{}
+\end{tabular}\\
+
+\begin{invoice}
+% Column Definition based on 540pt
+{@{}L{180pt-\tabcolsep} R{80pt-2\tabcolsep} L{60pt-2\tabcolsep} F{120pt-2\tabcolsep} F{100pt-\tabcolsep}@{}}
+% Header
+{\textbf{Beschrijving} & \textbf{Datum} & \textbf{Aantal} & \textbf{Prijs} & \textbf{Totaal} \\ \hline}
+% Totals
+{%
+    & & & \textbf{Totaal (ex.)} & \currency\hfill{\ttfamily\paramfield{totals}{total ex}} \\
+    & & & \textbf{BTW} & \currency\hfill{\ttfamily\paramfield{totals}{vat}} \\
+    & & & \textbf{Totaal (incl.)} & \currency\hfill{\ttfamily\paramfield{totals}{total incl}} \\
+}
+    \newcommand\formatrecords{%
+        \description & \date & \quantity &%
+        \currency\hfill{\ttfamily\price} &%
+        \currency\hfill{\ttfamily\total} \\}
+    \fortablerow{records}{formatrecords}
+\end{invoice}
+
+{\footnotesize\param{message}}
+\newcommand\formatimage[1]{\hspace{.75em}\includegraphics[width=2cm]{#1}\hspace{.75em}}%
+\hasparam[style]{images}{%
+    \vfill
+    \begin{center}
+        \forlistitem[style]{images}{formatimage}
+    \end{center}
+}{}
+\end{document}
